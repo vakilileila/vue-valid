@@ -143,7 +143,6 @@
           formName = this.expression,
           hook = el.getAttribute('hook'),
           vm = this.vm,
-          self = this,
           controls = {};
 
         el.noValidate = true;
