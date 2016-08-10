@@ -11,12 +11,19 @@
     "validator"
   ],
   "main": "vue-valid.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/optick/vue-valid.git"
+  },
   "scripts": {
     "test": "karma start",
     "dist": "uglifyjs --compress -- vue-valid.js > vue-valid.min.js"
   },
   "author": "Ian Walter <public@iankwalter.com>",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/optick/vue-valid/issues"
+  },
   "devDependencies": {
     "jasmine-core": "^2.3.4",
     "karma": "^0.13.11",
