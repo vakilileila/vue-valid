@@ -4,7 +4,7 @@ A fork of [vue-form](https://fergaldoyle/vue-form) which is used to validate for
 
 **STILL IN THE `FORK` -> `NEW PROJECT` METAMORPHOSIS**
 
-[![Build Status](https://travis-ci.org/fergaldoyle/vue-form.svg?branch=0.2.2)](https://travis-ci.org/fergaldoyle/vue-form)
+[![Build Status](https://semaphoreci.com/api/v1/optick/vue-valid/branches/master/badge.svg)](https://semaphoreci.com/optick/vue-valid)
 
 Form validation for Vue.js 1.0+. Works along side `v-model` but can also be used on your custom form control components (tinymce, select2, tag-editor etc).
 
@@ -156,7 +156,7 @@ methods: {
 
 You can also use `vue-valid` on your own form components. Simply wrap your component with an element with `v-form-ctrl`, `name` and any validation attributes. Set `v-form-ctrl` to the same property you will be updating via two-way binding in your component. You can also get a hook into the internals of `v-form-ctrl` to mange control state.
 
-[See custom tinymce component validation example](https://github.com/fergaldoyle/vue-form/tree/master/example)
+[See custom tinymce component validation example](https://github.com/optick/vue-valid/tree/master/example)
 
 ```html
 <div>
