@@ -160,11 +160,19 @@
           $error: {}
         };
 
-        // set inital state
+        // Set initial state.
         vm.$set(formName, state);
         Vue.util.addClass(el, pristineClass);
         Vue.util.addClass(el, validClass);
         Vue.util.addClass(el, untouchedClass);
+
+        // Prevent overwrite of state (hot-reload resets it on update).
+        // Thanks @laurentvdl.
+        vm.$watch(formName, function (newState) {
+          if (state !== newState) {
+            vm.$set(formName, state);
+          }
+        });
 
         var vueForm = this.el._vueForm = {
           name: formName,

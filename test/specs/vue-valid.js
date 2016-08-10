@@ -360,4 +360,12 @@ describe('vue-valid', function () {
 
   });
 
+  it('should prevent external updates of the validation model', function(done) {
+    vm.$set('myform', {});
+    Vue.nextTick(function() {
+        expect(vm.myform.$valid).toBe(false);
+        done();
+    });
+  });
+
 });
