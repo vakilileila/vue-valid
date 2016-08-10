@@ -2,30 +2,30 @@
 <html>
 
 <head>
-    <title>vue-form example</title>
+    <title>vue-valid example</title>
     <meta charset="utf-8" />
     <style>
         label {
             display: block;
             margin-bottom: 1.5em;
         }
-        
+
         label > span {
             display: inline-block;
             width: 8em;
             vertical-align: top;
         }
-        
+
         .tiny-mce {
             min-height: 3em;
             border: 2px solid #ccc;
             margin-bottom: 1em;
         }
-        
+
         .tiny-mce-toolbar {
             position: relative;
         }
-        
+
         .tiny-mce-toolbar > div {
             position: absolute;
             top: -32px;
@@ -57,7 +57,7 @@
     <pre>{{ myform | json }}</pre>
 
     <script src="../node_modules/vue/dist/vue.js"></script>
-    <script src="../vue-form.js"></script>
+    <script src="../vue-valid.js"></script>
 
     <script>
         new Vue({
@@ -67,14 +67,14 @@
                 myform: {},
                 model: {
                     name: '',
-                    html: '<p>Edit me!</p>'            
+                    html: '<p>Edit me!</p>'
                 }
             },
-            methods: {     
+            methods: {
                 onSubmit: function () {
                     console.log(this.myform.$valid);
                 }
-            },           
+            },
             components: {
                 'tinymce': {
                     props: ['id','model'],
@@ -84,7 +84,7 @@
                                 <div id="{{id}}-toolbar"></div>\
                             </div>\
                             <div class="tiny-mce" id="{{id}}"></div>\
-                        </div>',                    
+                        </div>',
                     watch: {
                         model: function (value) {
                             if(this._currentState === value) {
@@ -92,23 +92,23 @@
                             }
                             this.TinyMCE_editor.setContent(value || '');
                         }
-                    },                     
+                    },
                     ready: function () {
-                        
+
                         // get access to the internal v-form-ctrl object
                         console.log(this.$el.parentElement._vueFormCtrl);
-                        
+
                         var vm = this;
                         var options = {
                             setup: function (editor) {
-                                
+
                                 vm.TinyMCE_editor = editor;
                                 vm.TinyMCE_isFirstChange = true;
-                        
+
                                 editor.on('init', function () {
                                    vm.TinyMCE_editor.setContent(vm.model || '');
                                 });
-            
+
                                 editor.on('SetContent', function () {
                                     if(vm.TinyMCE_isFirstChange) {
                                         vm.TinyMCE_isFirstChange = false;
@@ -116,7 +116,7 @@
                                     }
                                     vm.model = vm._currentState = editor.getContent()
                                 });
-            
+
                                 editor.on('blur', function () {
                                     vm.model = vm._currentState = editor.getContent();
                                 });
@@ -128,11 +128,11 @@
                             elements: this.id,
                             fixed_toolbar_container: '#' + this.id + '-toolbar'
                         };
-            
+
                         this.$nextTick(function () {
                             tinymce.init(options);
                         });
-                        
+
                     }
                 }
             }

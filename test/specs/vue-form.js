@@ -1,4 +1,4 @@
-describe('vue-form', function () {
+describe('vue-valid', function () {
   var vm;
 
   beforeEach(function (done) {
@@ -22,7 +22,7 @@ describe('vue-form', function () {
           <input v-model="model.m" v-form-ctrl name="m" type="text" :pattern="'[A-Za-z]{3}'" />
           <input v-model="model.n" v-form-ctrl name="n" type="email" required minlength="8" />
           <input v-model="model.o" v-form-ctrl name="o" type="text" custom-validator="customValidator" />
-          
+
           <input type="checkbox" value="Jack" v-model="multicheck" v-form-ctrl required name="multicheck"/>
           <input type="checkbox" value="John" v-model="multicheck" v-form-ctrl required name="multicheck"/>
           <input type="checkbox" value="Mike" v-model="multicheck" v-form-ctrl required name="multicheck"/>
@@ -180,7 +180,7 @@ describe('vue-form', function () {
       Vue.nextTick(done);
     });
   });
-  
+
   it('should validate multiple validators', function (done) {
     expect(vm.myform.n.$valid).toBe(false);
     // pass required
@@ -201,7 +201,7 @@ describe('vue-form', function () {
         });
       });
     });
-  });  
+  });
 
   it('should validate custom-validator', function (done) {
     expect(vm.myform.o.$valid).toBe(false);
@@ -243,7 +243,7 @@ describe('vue-form', function () {
   it('should set form invalid when child is invald', function () {
     expect(vm.myform.$invalid).toBe(true);
   });
-   
+
   it('should add and remove state classes from inputs', function (done) {
     var classes = vm.$el.querySelector('[name=b]').className;
     expect(classes.indexOf('vf-pristine')).not.toBe(-1);
@@ -258,8 +258,8 @@ describe('vue-form', function () {
       expect(classes.indexOf('vf-valid')).not.toBe(-1);
       Vue.nextTick(done);
     });
-  }); 
-  
+  });
+
   it('should add and remove state classes from form', function (done) {
     var classes = vm.$el.querySelector('[name="myform"]').className;
     expect(classes.indexOf('vf-invalid')).not.toBe(-1);
@@ -272,11 +272,11 @@ describe('vue-form', function () {
       //expect(classes.indexOf('vf-valid')).not.toBe(-1);
       Vue.nextTick(done);
     });
-  });   
+  });
 
   it('should work with v-for scope', function (done) {
-    
-     vm.$destroy();    
+
+     vm.$destroy();
 
      var vmx = new Vue({
       el: 'body',
@@ -284,28 +284,28 @@ describe('vue-form', function () {
       template: `
         <form v-form name="myform">
           <label v-for="input in inputs">
-              <label> {{input.label}} <br>   
-              <input v-form-ctrl type="text" :name="input.name" v-model="input.model" :required="input.required" />      
+              <label> {{input.label}} <br>
+              <input v-form-ctrl type="text" :name="input.name" v-model="input.model" :required="input.required" />
               </label>
           </label>
         </form>
       `,
-      data: { 
+      data: {
         inputs: [{
             label: 'Input A',
             name: 'a',
             model: '',
-            required: true                    
+            required: true
         }, {
             label: 'Input B',
             name: 'b',
             model: '',
-            required: false                    
+            required: false
         }, {
             label: 'Input C',
             name: 'c',
             model: 'abc',
-            required: true                    
+            required: true
         }],
         myform: {}
       },
@@ -313,28 +313,28 @@ describe('vue-form', function () {
         setTimeout(function () {
           expect(vmx.myform.a.$valid).toBe(false);
           expect(vmx.myform.b.$valid).toBe(true);
-          expect(vmx.myform.c.$valid).toBe(true);      
+          expect(vmx.myform.c.$valid).toBe(true);
           done();
-        }, 100);       
+        }, 100);
       }
     });
 
-  }); 
+  });
 
   it('should work with v-bind object syntax', function (done) {
-    
+
      vm.$destroy();
-    
+
      var vmx = new Vue({
       el: 'body',
       replace: false,
       template: `
         <form v-form name="myform">
           <input v-model="model.a" v-form-ctrl v-bind="{'name': 'a', required: true}" />
-          <input v-model="model.b" v-form-ctrl :="{'name': 'b', required: false}" />         
+          <input v-model="model.b" v-form-ctrl :="{'name': 'b', required: false}" />
         </form>
       `,
-      data: { 
+      data: {
         model: {
           b: 'xxx'
         },
@@ -343,21 +343,21 @@ describe('vue-form', function () {
       ready: function () {
         this.$nextTick(function () {
           expect(vmx.myform.a.$valid).toBe(false);
-          expect(vmx.myform.b.$valid).toBe(true);  
-          
+          expect(vmx.myform.b.$valid).toBe(true);
+
           /*vmx.model.a = 'aaa';
           vmx.model.b = 'aa';
           this.$nextTick(function () {
             console.log(vmx.model);
             expect(vmx.myform.a.$valid).toBe(true);
-            expect(vmx.myform.b.$valid).toBe(false);             
-            done();          
+            expect(vmx.myform.b.$valid).toBe(false);
+            done();
           });*/
           done();
         });
       }
     });
 
-  }); 
+  });
 
 });

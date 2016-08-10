@@ -1,9 +1,9 @@
 {
-  "name": "vue-form",
-  "version": "0.3.1",
+  "name": "vue-valid",
+  "version": "1.0.0",
   "description": "Form validation for Vue.js",
-  "main": "vue-form.js",
-  "authors": ["Fergal Doyle"],
+  "main": "vue-valid.js",
+  "authors": ["Ian Walter <public@iankwalter.com>"],
   "license": "MIT",
   "dependencies": {
   },

@@ -1,13 +1,13 @@
 {
-  "name": "vue-form",
-  "version": "0.3.1",
+  "name": "vue-valid",
+  "version": "1.0.0",
   "description": "Form validation for Vue.js",
-  "main": "vue-form.js",
+  "main": "vue-valid.js",
   "scripts": {
     "test": "karma start",
-    "dist": "uglifyjs --compress -- vue-form.js > vue-form.min.js"
+    "dist": "uglifyjs --compress -- vue-valid.js > vue-valid.min.js"
   },
-  "author": "Fergal Doyle",
+  "author": "Ian Walter <public@iankwalter.com>",
   "license": "MIT",
   "devDependencies": {
     "jasmine-core": "^2.3.4",
