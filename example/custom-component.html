@@ -38,7 +38,7 @@
 
 <body>
 
-    <form v-form name="myform" @submit.prevent="onSubmit">
+    <form v-validate="myform" @submit.prevent="onSubmit">
         <label>
             <span>Name *</span>
             <input v-model="model.name" v-form-ctrl required name="name" />

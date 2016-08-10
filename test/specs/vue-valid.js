@@ -6,7 +6,7 @@ describe('vue-valid', function () {
       el: 'body',
       replace: false,
       template: `
-        <form v-form name="myform">
+        <form v-validate="myform">
           <input v-model="model.a" v-form-ctrl name="a" required type="text" />
           <input v-model="model.b" v-form-ctrl name="b" required type="text" />
           <input v-model="model.c" v-form-ctrl name="c" type="text" />
@@ -261,12 +261,12 @@ describe('vue-valid', function () {
   });
 
   it('should add and remove state classes from form', function (done) {
-    var classes = vm.$el.querySelector('[name="myform"]').className;
+    var classes = vm.$el.querySelector('form').className;
     expect(classes.indexOf('vf-invalid')).not.toBe(-1);
     expect(classes.indexOf('vf-pristine')).not.toBe(-1);
     vm.model.b = 'abc';
     Vue.nextTick(function () {
-      classes = vm.$el.querySelector('[name="myform"]').className;
+      classes = vm.$el.querySelector('form').className;
       //expect(classes.indexOf('vf-pristine')).toBe(-1);
       //expect(classes.indexOf('vf-invalid')).toBe(-1);
       //expect(classes.indexOf('vf-valid')).not.toBe(-1);
@@ -282,7 +282,7 @@ describe('vue-valid', function () {
       el: 'body',
       replace: false,
       template: `
-        <form v-form name="myform">
+        <form v-validate="myform">
           <label v-for="input in inputs">
               <label> {{input.label}} <br>
               <input v-form-ctrl type="text" :name="input.name" v-model="input.model" :required="input.required" />
@@ -329,7 +329,7 @@ describe('vue-valid', function () {
       el: 'body',
       replace: false,
       template: `
-        <form v-form name="myform">
+        <form v-validate="myform">
           <input v-model="model.a" v-form-ctrl v-bind="{'name': 'a', required: true}" />
           <input v-model="model.b" v-form-ctrl :="{'name': 'b', required: false}" />
         </form>

@@ -20,7 +20,7 @@
 
 <body>
 
-    <form v-form name="myform" @submit.prevent="onSubmit" hook="formHook">
+    <form v-validate="myform" @submit.prevent="onSubmit" hook="formHook">
 
         <div class="errors" v-if="myform.$submitted">
             <p v-if="myform.name.$error.required">Name is required.</p>
@@ -47,7 +47,7 @@
 
     <pre>{{ myform | json }}</pre>
 
-    <form name="myForm" v-form>
+    <form v-validate="myForm">
         <input v-form-ctrl v-model="foobar" name="foobar" placeholder="foobar" required />
         <input v-form-ctrl v-model="foobar2" name="foobar2" placeholder="foobar2" />
         <input v-form-ctrl v-model="foobar3" name="foobar3" type="email"  placeholder="foobar3" required />

@@ -22,15 +22,16 @@ You can also directly include it with a `<script>` tag when you have Vue itself 
 
 ## Usage
 
-This plugin registers two global directives, `v-form` and `v-form-ctrl`. Apply the `v-form` directive to a `form` element, and set the `name` attribute. This `name` will hold the overall form state object and is created on the current vm.
+This plugin registers two global directives, `v-validate` and `v-form-ctrl`. Apply the `v-validate` directive to a `form` element and set it equal to the name of your form state object. For example,
+`<form v-validate="signUpForm">`.
 
 Apply the `v-form-ctrl` directive to each of the form inputs. `v-form-ctrl` will watch `v-model` and validate on change. Use static or binding attributes to specify validators (`required`, `maxlength`, `type="email"`, `type="url"`, etc)
 
 ```html
-<form v-form name="myform" @submit.prevent="onSubmit">
-    <div class="errors" v-if="myform.$submitted">
-        <p v-if="myform.name.$error.required">Name is required.</p>
-        <p v-if="myform.email.$error.email">Email is not valid.</p>
+<form v-validate="signUpForm" @submit.prevent="onSubmit">
+    <div class="errors" v-if="signUpForm.$submitted">
+        <p v-if="signUpForm.name.$error.required">Name is required.</p>
+        <p v-if="signUpForm.email.$error.email">Email is not valid.</p>
     </div>
     <label>
         <span>Name *</span>
@@ -154,7 +155,7 @@ methods: {
 
 ## Custom form control component
 
-You can also use `vue-valid` on your own form components. Simply wrap your component with an element with `v-form-ctrl`, `name` and any validation attributes. Set `v-form-ctrl` to the same property you will be updating via two-way binding in your component. You can also get a hook into the internals of `v-form-ctrl` to mange control state.
+You can also use `vue-valid` on your own form components. Simply wrap your component with an element with `v-form-ctrl`, `name` and any validation attributes. Set `v-form-ctrl` to the same property you will be updating via two-way binding in your component. You can also get a hook into the internals of `v-form-ctrl` to manage control state.
 
 [See custom tinymce component validation example](https://github.com/optick/vue-valid/tree/master/example)
 

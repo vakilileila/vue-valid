@@ -1,4 +1,4 @@
-﻿;
+;
 (function() {
   var vueForm = {};
   vueForm.install = function(Vue) {
@@ -135,12 +135,12 @@
 
     }
 
-    Vue.directive('form', {
-      id: 'form',
+    Vue.directive('validate', {
+      id: 'validate',
       priority: 10001,
       bind: function() {
         var el = this.el,
-          formName = el.getAttribute('name'),
+          formName = this.expression,
           hook = el.getAttribute('hook'),
           vm = this.vm,
           self = this,
@@ -330,7 +330,7 @@
           el: el,
           name: inputName,
           state: state,
-          setVadility: function(key, isValid) {
+          setValidity: function(key, isValid) {
             var vueForm = self._vueForm;
 
             if (!vueForm) {
@@ -339,7 +339,7 @@
 
             if (typeof key === 'boolean') {
               // when key is boolean, we are setting
-              // overall field vadility
+              // overall field validity
               state.$valid = isValid;
               state.$invalid = !isValid;
 
@@ -403,7 +403,7 @@
               var args = [value];
 
               if (_this.validators[validator] === false) {
-                _this.setVadility(validator, true);
+                _this.setValidity(validator, true);
                 return;
               }
 
@@ -414,7 +414,7 @@
               // if not the required validator and value is
               // falsy but not a number, do not validate
               if (validator !== 'required' && !value && typeof value !== 'number') {
-                _this.setVadility(validator, true);
+                _this.setValidity(validator, true);
                 return;
               }
 
@@ -426,14 +426,14 @@
 
               if (!_this.validators[validator].apply(this, args)) {
                 isValid = false;
-                _this.setVadility(validator, false);
+                _this.setValidity(validator, false);
               } else {
-                _this.setVadility(validator, true);
+                _this.setValidity(validator, true);
               }
 
             });
 
-            _this.setVadility(true, isValid);
+            _this.setValidity(true, isValid);
 
             return isValid;
           }
@@ -451,13 +451,13 @@
         } else {
           // this is either a non form element node
           // or a detached node (inside v-if)
-          form = closest(el, 'form[name]');
+          form = closest(el, 'form');
           if (form && form._vueForm) {
             init(form._vueForm);
           } else {
             // must be detached
             setTimeout(function() {
-              form = el.form || closest(el, 'form[name]');
+              form = el.form || closest(el, 'form');
               init(form._vueForm);
             }, 0);
           }

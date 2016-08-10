@@ -20,7 +20,7 @@
 
 <body>
 
-    <form v-form name="myform" @submit.prevent="onSubmit">
+    <form v-validate="myform" @submit.prevent="onSubmit">
 
         <label v-for="input in inputs">
             <label> {{input.label}} <br>
