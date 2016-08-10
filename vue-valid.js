@@ -22,7 +22,7 @@
       el.className = (classes.join(" ")).trim();
     }
 
-    var emailRegExp = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i, // from angular
+    var emailRegExp = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.([a-z][a-z]+)|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i,
       urlRegExp = /^(http\:\/\/|https\:\/\/)(.{4,})$/,
       dirtyClass = 'vf-dirty',
       pristineClass = 'vf-pristine',
@@ -59,7 +59,7 @@
         }
         return !!value;
       },
-      email: function(value, multiple) {
+      email: function(value) {
         return emailRegExp.test(value);
       },
       number: function(value) {

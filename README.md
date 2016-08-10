@@ -4,7 +4,7 @@ A fork of [vue-form](https://fergaldoyle/vue-form) which is used to validate for
 
 **STILL IN THE `FORK` -> `NEW PROJECT` METAMORPHOSIS**
 
-[![Build Status](https://semaphoreci.com/api/v1/optick/vue-valid/branches/master/badge.svg)](https://semaphoreci.com/optick/vue-valid)
+[![Build Status](https://semaphoreci.com/api/v1/optick/vue-valid/branches/master/badge.svg)](https://semaphoreci.com/optick/vue-valid) [![Trello](https://img.shields.io/badge/trello-public-blue.svg?style=flat)](https://trello.com/b/v5G6HRcC/vue-valid)
 
 Form validation for Vue.js 1.0+. Works along side `v-model` but can also be used on your custom form control components (tinymce, select2, tag-editor etc).
 

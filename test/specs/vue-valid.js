@@ -102,7 +102,7 @@ describe('vue-valid', function () {
 
   it('should validate [type=email]', function (done) {
     expect(vm.myform.f.$valid).toBe(true);
-    vm.model.f = 'not a real email';
+    vm.model.f = 'foo@bar';
     Vue.nextTick(function () {
       expect(vm.myform.f.$valid).toBe(false);
       Vue.nextTick(done);
@@ -189,12 +189,12 @@ describe('vue-valid', function () {
       // email will be invalid
       expect(vm.myform.n.$valid).toBe(false);
       // pass email
-      vm.model.n = 'a@b.c';
+      vm.model.n = 'a@b.co';
       Vue.nextTick(function () {
         // minlength will be invalid
         expect(vm.myform.n.$valid).toBe(false);
         // pass minlength
-        vm.model.n = 'aa@bb.xxxx';
+        vm.model.n = 'aa@bb.media';
         Vue.nextTick(function () {
           expect(vm.myform.n.$valid).toBe(true);
           Vue.nextTick(done);
