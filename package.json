@@ -1,7 +1,15 @@
 {
   "name": "vue-valid",
   "version": "1.0.0",
-  "description": "Form validation for Vue.js",
+  "description": "A fork of vue-form which is used to validate forms within Vue.js components",
+  "keywords": [
+    "vue",
+    "vue.js",
+    "vuejs",
+    "form",
+    "validation",
+    "validator"
+  ],
   "main": "vue-valid.js",
   "scripts": {
     "test": "karma start",
