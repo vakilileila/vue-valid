@@ -1,6 +1,8 @@
 describe('vue-valid', function () {
   var vm;
 
+  Vue.config.silent = true;
+
   beforeEach(function (done) {
     vm = new Vue({
       el: 'body',
@@ -22,6 +24,7 @@ describe('vue-valid', function () {
           <input v-model="model.m" v-form-ctrl name="m" type="text" :pattern="'[A-Za-z]{3}'" />
           <input v-model="model.n" v-form-ctrl name="n" type="email" required minlength="8" />
           <input v-model="model.o" v-form-ctrl name="o" type="text" custom-validator="customValidator" />
+          <input type="text" name="p" v-model="model.p" v-form-ctrl custom-validator="asyncCustomValidator">
 
           <input type="checkbox" value="Jack" v-model="multicheck" v-form-ctrl required name="multicheck"/>
           <input type="checkbox" value="John" v-model="multicheck" v-form-ctrl required name="multicheck"/>
@@ -30,6 +33,7 @@ describe('vue-valid', function () {
         </form>
       `,
       data: {
+        myform: {},
         isRequired: true,
         model: {
           a: 'aaa',
@@ -47,21 +51,33 @@ describe('vue-valid', function () {
           m: 'x',
           n: '',
           o: 'abc',
+          p: 'cameup',
           multicheck: []
         }
       },
       methods: {
         customValidator: function (value) {
           return value === 'custom';
+        },
+        asyncCustomValidator: function(value) {
+          return new Promise(function(resolve, reject) {
+            setTimeout(function() {
+              if (value === 'custom') {
+                resolve(true);
+              } else {
+                reject(false);
+              }
+            }, 100);
+          });
         }
       }
     });
-    Vue.nextTick(done);
+    done();
   });
 
   afterEach(function (done) {
     vm.$destroy();
-    Vue.nextTick(done);
+    done();
   });
 
   it('should create an object in the current vm', function () {
@@ -87,7 +103,7 @@ describe('vue-valid', function () {
     vm.model.a = '';
     Vue.nextTick(function () {
       expect(vm.myform.a.$valid).toBe(false);
-      Vue.nextTick(done);
+      done();
     });
   });
 
@@ -96,7 +112,7 @@ describe('vue-valid', function () {
     vm.isRequired = false;
     Vue.nextTick(function () {
       expect(vm.myform.d.$valid).toBe(true);
-      Vue.nextTick(done);
+      done();
     });
   });
 
@@ -105,7 +121,7 @@ describe('vue-valid', function () {
     vm.model.f = 'foo@bar';
     Vue.nextTick(function () {
       expect(vm.myform.f.$valid).toBe(false);
-      Vue.nextTick(done);
+      done();
     });
   });
 
@@ -114,7 +130,7 @@ describe('vue-valid', function () {
     vm.model.g = 'not a real email';
     Vue.nextTick(function () {
       expect(vm.myform.g.$valid).toBe(false);
-      Vue.nextTick(done);
+      done();
     });
   });
 
@@ -123,7 +139,7 @@ describe('vue-valid', function () {
     vm.model.l = 'http://foo.bar/baz';
     Vue.nextTick(function () {
       expect(vm.myform.l.$valid).toBe(true);
-      Vue.nextTick(done);
+      done();
     });
   });
 
@@ -132,7 +148,7 @@ describe('vue-valid', function () {
     vm.model.a = '';
     Vue.nextTick(function () {
       expect(vm.myform.a.$valid).toBe(false);
-      Vue.nextTick(done);
+      done();
     });
   });
 
@@ -141,7 +157,7 @@ describe('vue-valid', function () {
     vm.model.h = '123456';
     Vue.nextTick(function () {
       expect(vm.myform.h.$valid).toBe(true);
-      Vue.nextTick(done);
+      done();
     });
   });
 
@@ -150,7 +166,7 @@ describe('vue-valid', function () {
     vm.model.i = '123456789100';
     Vue.nextTick(function () {
       expect(vm.myform.i.$valid).toBe(false);
-      Vue.nextTick(done);
+      done();
     });
   });
 
@@ -159,7 +175,7 @@ describe('vue-valid', function () {
     vm.model.j = 9;
     Vue.nextTick(function () {
       expect(vm.myform.j.$valid).toBe(false);
-      Vue.nextTick(done);
+      done();
     });
   });
 
@@ -168,7 +184,7 @@ describe('vue-valid', function () {
     vm.model.k = 15;
     Vue.nextTick(function () {
       expect(vm.myform.k.$valid).toBe(false);
-      Vue.nextTick(done);
+      done();
     });
   });
 
@@ -177,7 +193,7 @@ describe('vue-valid', function () {
     vm.model.m = 'abc';
     Vue.nextTick(function () {
       expect(vm.myform.m.$valid).toBe(true);
-      Vue.nextTick(done);
+      done();
     });
   });
 
@@ -197,7 +213,7 @@ describe('vue-valid', function () {
         vm.model.n = 'aa@bb.media';
         Vue.nextTick(function () {
           expect(vm.myform.n.$valid).toBe(true);
-          Vue.nextTick(done);
+          done();
         });
       });
     });
@@ -208,7 +224,7 @@ describe('vue-valid', function () {
     vm.model.o = 'custom';
     Vue.nextTick(function () {
       expect(vm.myform.o.$valid).toBe(true);
-      Vue.nextTick(done);
+      done();
     });
   });
 
@@ -218,7 +234,7 @@ describe('vue-valid', function () {
     vm.$el.querySelector('[name=multicheck]').click();
     Vue.nextTick(function () {
       expect(vm.myform.multicheck.$valid).toBe(true);
-      Vue.nextTick(done);
+      done();
     });
   });
 
@@ -227,7 +243,7 @@ describe('vue-valid', function () {
     vm.model.d = 'abc';
     Vue.nextTick(function () {
       expect(vm.myform.d.$dirty).toBe(true);
-      Vue.nextTick(done);
+      done();
     });
   });
 
@@ -236,7 +252,7 @@ describe('vue-valid', function () {
     vm.model.d = 'abc';
     Vue.nextTick(function () {
       expect(vm.myform.$dirty).toBe(true);
-      Vue.nextTick(done);
+      done();
     });
   });
 
@@ -256,7 +272,7 @@ describe('vue-valid', function () {
       expect(classes.indexOf('vf-invalid')).toBe(-1);
       expect(classes.indexOf('vf-invalid-required')).toBe(-1);
       expect(classes.indexOf('vf-valid')).not.toBe(-1);
-      Vue.nextTick(done);
+      done();
     });
   });
 
@@ -270,7 +286,7 @@ describe('vue-valid', function () {
       //expect(classes.indexOf('vf-pristine')).toBe(-1);
       //expect(classes.indexOf('vf-invalid')).toBe(-1);
       //expect(classes.indexOf('vf-valid')).not.toBe(-1);
-      Vue.nextTick(done);
+      done();
     });
   });
 
@@ -283,11 +299,16 @@ describe('vue-valid', function () {
       replace: false,
       template: `
         <form v-validate="myform">
-          <label v-for="input in inputs">
-              <label> {{input.label}} <br>
-              <input v-form-ctrl type="text" :name="input.name" v-model="input.model" :required="input.required" />
-              </label>
-          </label>
+          <div v-for="input in inputs">
+            <label :for="input.name">{{ input.label }}</label>
+            <br>
+            <input :id="input.name"
+                   type="text"
+                   v-form-ctrl
+                   v-model="input.model"
+                   :name="input.name"
+                   :required="input.required">
+          </div>
         </form>
       `,
       data: {
@@ -366,6 +387,30 @@ describe('vue-valid', function () {
         expect(vm.myform.$valid).toBe(false);
         done();
     });
+  });
+
+  it('should validate custom-validator after promise resolves', function(done) {
+
+    // Wait for asynchronous validator to mark field as invalid.
+    setTimeout(function() {
+
+      // Assert that asynchronous validator has marked field as invalid.
+      Vue.nextTick(function() {
+        expect(vm.myform.p.$valid).toBe(false);
+      });
+
+      // Change field to correct value and assert asynchronous validator has
+      // marked field as valid.
+      vm.model.p = 'custom';
+      setTimeout(function() {
+        Vue.nextTick(function() {
+          expect(vm.myform.p.$valid).toBe(true);
+          done();
+        });
+      }, 101);
+
+    }, 101);
+
   });
 
 });

@@ -295,11 +295,13 @@
         }
 
         if (boundInputName) {
-          scope.$watch(boundInputName, function(value) {
-            inputName = value;
-          }, {
-            immediate: true
-          });
+          scope.$watch(
+            boundInputName,
+            function(value) {
+              inputName = value;
+            },
+            { immediate: true }
+          );
         }
 
         if (objectBindingExp !== null) {
@@ -396,7 +398,16 @@
           validate: function() {
             var isValid = true,
               _this = this,
-              value = self._value;
+              value = self._value,
+              promise;
+
+            //
+            var setValidity = function(validator, response) {
+              if (!response) {
+                isValid = false;
+              }
+              _this.setValidity(validator, response);
+            }
 
             Object.keys(this.validators).forEach(function(validator) {
               var args = [value];
@@ -423,18 +434,32 @@
                 args.push(_this[validator]);
               }
 
-              if (!_this.validators[validator].apply(this, args)) {
-                isValid = false;
-                _this.setValidity(validator, false);
+              var response = _this.validators[validator].apply(this, args);
+              if (typeof response.then === 'function') {
+                promise = response;
+                promise.validator = validator;
               } else {
-                _this.setValidity(validator, true);
+                setValidity(validator, response);
               }
-
             });
 
-            _this.setValidity(true, isValid);
+            if (promise) {
 
-            return isValid;
+              //
+              promise.then(
+                function(value) {
+                  setValidity(promise.validator, value);
+                  _this.setValidity(true, value && isValid);
+                },
+                function() {
+                  setValidity(promise.validator, false);
+                  _this.setValidity(true, false);
+                }
+              );
+
+            } else {
+              _this.setValidity(true, isValid);
+            }
           }
         };
 

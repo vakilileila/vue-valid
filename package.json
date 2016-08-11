@@ -1,6 +1,6 @@
 {
   "name": "vue-valid",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "A fork of vue-form which is used to validate forms within Vue.js components",
   "keywords": [
     "vue",
@@ -25,6 +25,7 @@
     "url": "https://github.com/optick/vue-valid/issues"
   },
   "devDependencies": {
+    "babel-polyfill": "^6.13.0",
     "jasmine-core": "^2.3.4",
     "karma": "^0.13.11",
     "karma-babel-preprocessor": "^5.2.2",

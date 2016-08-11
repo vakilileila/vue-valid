@@ -14,11 +14,12 @@ module.exports = function(config) {
 
 
     // list of files / patterns to load in the browser
-		files: [
-		  'node_modules/vue/dist/vue.min.js',
-		  'vue-valid.js',
-		  'test/specs/*.js'
-		],
+    files: [
+      'node_modules/babel-polyfill/dist/polyfill.js',
+      'node_modules/vue/dist/vue.js',
+      'vue-valid.js',
+      'test/specs/*.js'
+    ],
 
 
     // list of files to exclude
