@@ -421,9 +421,11 @@
                 return;
               }
 
-              // if not the required validator and value is
-              // falsy but not a number, do not validate
-              if (validator !== 'required' && !value && typeof value !== 'number') {
+              // If the value is null, undefined, or an empty string and it's
+              // not a required or custom validator, don't bother validating.
+              var notCustomValidator = validator !== 'custom-validator';
+              var isEmpty = !value && value !== false && value !== 0;
+              if (validator !== 'required' && notCustomValidator && isEmpty) {
                 _this.setValidity(validator, true);
                 return;
               }
